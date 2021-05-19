@@ -4,6 +4,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import pandas as pd
 import collections
 
+
 def make_category_dict_out_of_wine_dict(wines_dict):
     category_dict_out_of_main_dict = collections.defaultdict(list)
     for dictionary in wines_dict:
@@ -13,6 +14,7 @@ def make_category_dict_out_of_wine_dict(wines_dict):
 
     return category_dict_out_of_main_dict
 
+
 def sort_category_dict_out_of_wine_dict(category_dict_out_of_wine_dict):
     sorted_category_dict_out_of_wine_dict = collections.defaultdict(list)
     for element in sorted(category_dict_out_of_wine_dict.keys()):
@@ -20,11 +22,13 @@ def sort_category_dict_out_of_wine_dict(category_dict_out_of_wine_dict):
 
     return sorted_category_dict_out_of_wine_dict
 
+
 def count_age_of_company(year):
     current_year = datetime.datetime.now()
     age_of_company = current_year.year-year.year
 
     return age_of_company
+
 
 def proper_translation_of_year_into_russian_on_basis_of_company_age(year):
     proper_words_in_russian_dict = ["лет", "год", "года"]
@@ -42,9 +46,10 @@ def proper_translation_of_year_into_russian_on_basis_of_company_age(year):
 
     return proper_word_in_russian
 
+
 if __name__ == "__main__":
     YEAR_OF_INCORPORATION = datetime.datetime(year=1920, month=1, day=1, hour=1)
-    excel_data_df = pd.read_excel("C:\\Users\\berry\\OneDrive\\Рабочий стол\\UrokiGit\\wine\\wine3.xlsx", sheet_name="Лист1", keep_default_na=False)
+    excel_data_df = pd.read_excel("C:\\Users\\berry\\OneDrive\\Рабочий стол\\UrokiGit\\wine\\wine.xlsx", sheet_name="Лист1", keep_default_na=False)
     excel_data_dict = excel_data_df.to_dict(orient="records")
 
     category_dict_out_of_wine_dict = make_category_dict_out_of_wine_dict(excel_data_dict)
