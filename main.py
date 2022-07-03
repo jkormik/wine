@@ -12,18 +12,10 @@ YEAR_OF_INCORPORATION = 1920
 def make_category_dict_out_of_wine_dict(wines_dict):
     category_dict_out_of_main_dict = collections.defaultdict(list)
     for dictionary in wines_dict:
-        category = dictionary.get("Категория")
-        del dictionary["Категория"]
-        category_dict_out_of_main_dict[category].append(dictionary)
+        category_dict_out_of_main_dict[dictionary.get("Категория")].append(
+            dict(list(dictionary.items())[1:])
+        )
     return category_dict_out_of_main_dict
-
-
-def sort_category_dict_out_of_wine_dict(category_dict_out_of_wine_dict):
-    sorted_category_dict_out_of_wine_dict = collections.defaultdict(list)
-    for element in sorted(category_dict_out_of_wine_dict.keys()):
-        sorted_category_dict_out_of_wine_dict[element] = \
-            category_dict_out_of_wine_dict[element]
-    return sorted_category_dict_out_of_wine_dict
 
 
 def count_age_of_company(year):
@@ -33,13 +25,13 @@ def count_age_of_company(year):
 def proper_translation_of_year_into_russian_on_basis_of_company_age(year):
     proper_words_in_russian_dict = ["лет", "год", "года"]
     exceptions = [11, 12, 13, 14]
-    special_condition_numbers_for_god = [1]
-    special_condition_numbers_for_goda = [2, 3, 4]
+    first_special_condition_numbers = [1]
+    second_special_condition_numbers = [2, 3, 4]
     last_number_of_age_of_company = int(str(year)[-1])
-    if last_number_of_age_of_company in special_condition_numbers_for_god \
+    if last_number_of_age_of_company in first_special_condition_numbers \
             and year not in exceptions:
         proper_word_in_russian = proper_words_in_russian_dict[1]
-    elif last_number_of_age_of_company in special_condition_numbers_for_goda \
+    elif last_number_of_age_of_company in second_special_condition_numbers \
             and year not in exceptions:
         proper_word_in_russian = proper_words_in_russian_dict[2]
     else:
@@ -56,10 +48,6 @@ def main():
     category_dict_out_of_wine_dict = make_category_dict_out_of_wine_dict(
         assortment
     )
-    sorted_category_dict_out_of_wine_dict = \
-        sort_category_dict_out_of_wine_dict(
-            category_dict_out_of_wine_dict
-        )
     age_of_company = count_age_of_company(YEAR_OF_INCORPORATION)
     proper_word_in_russian = \
         proper_translation_of_year_into_russian_on_basis_of_company_age(
@@ -73,7 +61,7 @@ def main():
     rendered_page = template.render(
         age_of_company=age_of_company,
         year_translation=proper_word_in_russian,
-        wines_dict=sorted_category_dict_out_of_wine_dict
+        wines_dict=category_dict_out_of_wine_dict
     )
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
