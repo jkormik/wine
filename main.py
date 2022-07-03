@@ -10,9 +10,9 @@ from dotenv import load_dotenv
 YEAR_OF_INCORPORATION = 1920
 
 
-def make_category_dict_out_of_wine_dict(wines_dict):
+def sort_wines_by_categories(wines):
     category_dict_out_of_main_dict = collections.defaultdict(list)
-    for dictionary in wines_dict:
+    for dictionary in wines:
         category_dict_out_of_main_dict[dictionary.get('Категория')].append(
             dict(list(dictionary.items())[1:])
         )
@@ -48,7 +48,7 @@ def main():
         sheet_name='Лист1',
         keep_default_na=False
     ).to_dict(orient='records')
-    category_dict_out_of_wine_dict = make_category_dict_out_of_wine_dict(
+    categories_of_wines = sort_wines_by_categories(
         assortment
     )
     age_of_company = count_age_of_company(YEAR_OF_INCORPORATION)
@@ -64,7 +64,7 @@ def main():
     rendered_page = template.render(
         age_of_company=age_of_company,
         year_translation=proper_word_in_russian,
-        wines_dict=category_dict_out_of_wine_dict
+        categories_of_wines=categories_of_wines
     )
     with open('index.html', 'w', encoding='utf8') as file:
         file.write(rendered_page)
