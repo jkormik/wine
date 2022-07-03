@@ -3,7 +3,8 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import pandas as pd
 import collections
-from os import getcwd
+from os import getcwd, getenv
+from dotenv import load_dotenv
 
 
 YEAR_OF_INCORPORATION = 1920
@@ -12,7 +13,7 @@ YEAR_OF_INCORPORATION = 1920
 def make_category_dict_out_of_wine_dict(wines_dict):
     category_dict_out_of_main_dict = collections.defaultdict(list)
     for dictionary in wines_dict:
-        category_dict_out_of_main_dict[dictionary.get("Категория")].append(
+        category_dict_out_of_main_dict[dictionary.get('Категория')].append(
             dict(list(dictionary.items())[1:])
         )
     return category_dict_out_of_main_dict
@@ -23,7 +24,7 @@ def count_age_of_company(year):
 
 
 def proper_translation_of_year_into_russian_on_basis_of_company_age(year):
-    proper_words_in_russian_dict = ["лет", "год", "года"]
+    proper_words_in_russian_dict = ['лет', 'год', 'года']
     exceptions = [11, 12, 13, 14]
     first_special_condition_numbers = [1]
     second_special_condition_numbers = [2, 3, 4]
@@ -40,11 +41,13 @@ def proper_translation_of_year_into_russian_on_basis_of_company_age(year):
 
 
 def main():
+    load_dotenv()
+    where_assortment = getenv('PATH_TO_ASSORTMENT_TABLE', getcwd())
     assortment = pd.read_excel(
-        f"{getcwd()}\\wine.xlsx",
-        sheet_name="Лист1",
+        f'{where_assortment}/wine.xlsx',
+        sheet_name='Лист1',
         keep_default_na=False
-    ).to_dict(orient="records")
+    ).to_dict(orient='records')
     category_dict_out_of_wine_dict = make_category_dict_out_of_wine_dict(
         assortment
     )
@@ -63,11 +66,11 @@ def main():
         year_translation=proper_word_in_russian,
         wines_dict=category_dict_out_of_wine_dict
     )
-    with open('index.html', 'w', encoding="utf8") as file:
+    with open('index.html', 'w', encoding='utf8') as file:
         file.write(rendered_page)
     server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
