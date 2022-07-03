@@ -123,7 +123,7 @@
           {% for wine_info in categories_of_wines[wine_category[0]] %}
           <div class="col-lg-4 mb-5 col-md-6">
             <div class="wine_v_1 text-center pb-4 pt-5">
-              {% if wine_info.Акция == "Выгодное предложение" %}
+              {% if wine_info.Акция %}
               <img src="images/{{wine_info.Картинка}}" alt="Image" class="img-fluid"><img src="assets/profitable.png" style="width:10rem;height: 10rem;position:absolute;right: -20px;top: -20px;">
               {% else %}
               <img src="images/{{wine_info.Картинка}}" alt="Image" class="img-fluid">
