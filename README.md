@@ -12,14 +12,20 @@
 |Белые вина|Белая леди|Дамский пальчик|399|belaya_ledi.png|Выгодное предложение|
 
 - Укажите путь к входным данным в файле .env\
-```PATH_TO_ASSORTMENT_TABLE='C:/Users/username/Desktop/myprojectdirectory/wine'```
+```
+PATH_TO_ASSORTMENT_TABLE='C:/Users/username/Desktop/myprojectdirectory/wine'
+```
 - Python3 уже должен быть установлен. Затем используйте pip (или pip3 при конфликте с python2) для установки зависимостей\
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 ## Запуск
 
 - Запустите сайт командой\
-```python3 main.py```
+```
+python3 main.py
+```
 - Перейдите на сайт по адресу [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ## Цели проекта
