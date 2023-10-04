@@ -11,12 +11,17 @@ YEAR_OF_INCORPORATION = 1920
 
 
 def group_wines_by_categories(wines):
-    main_dict_categories = collections.defaultdict(list)
+    wines_grouped_by_categories = collections.defaultdict(list)
     for dictionary in wines:
-        main_dict_categories[dictionary.get('Категория')].append(
-            dict(list(dictionary.items())[1:])
+        wine_category = dictionary.get('Категория')
+        
+        wine_details = dict(list(dictionary.items())[1:])
+        print (wine_details)
+        wines_grouped_by_categories[wine_category].append(
+            wine_details
         )
-    return main_dict_categories
+    print (wines_grouped_by_categories)
+    return wines_grouped_by_categories
 
 
 def count_age_of_company(year):
