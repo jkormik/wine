@@ -10,13 +10,13 @@ from dotenv import load_dotenv
 YEAR_OF_INCORPORATION = 1920
 
 
-def sort_wines_by_categories(wines):
-    category_dict_out_of_main_dict = collections.defaultdict(list)
+def group_wines_by_categories(wines):
+    main_dict_categories = collections.defaultdict(list)
     for dictionary in wines:
-        category_dict_out_of_main_dict[dictionary.get('Категория')].append(
+        main_dict_categories[dictionary.get('Категория')].append(
             dict(list(dictionary.items())[1:])
         )
-    return category_dict_out_of_main_dict
+    return main_dict_categories
 
 
 def count_age_of_company(year):
@@ -42,15 +42,16 @@ def proper_translation_of_year_into_russian_on_basis_of_company_age(year):
 
 def main():
     load_dotenv()
-    where_assortment = getenv('PATH_TO_ASSORTMENT_TABLE', getcwd())
+    path_to_assortment = getenv('PATH_TO_ASSORTMENT_TABLE', getcwd())
     assortment = pd.read_excel(
-        f'{where_assortment}/wine.xlsx',
+        f'{path_to_assortment}/wine.xlsx',
         sheet_name='Лист1',
         keep_default_na=False
     ).to_dict(orient='records')
-    categories_of_wines = sort_wines_by_categories(
+    categories_of_wines = group_wines_by_categories(
         assortment
     )
+    print(categories_of_wines)
     age_of_company = count_age_of_company(YEAR_OF_INCORPORATION)
     proper_word_in_russian = \
         proper_translation_of_year_into_russian_on_basis_of_company_age(
