@@ -21,10 +21,6 @@ def group_wines_by_categories(wines):
     return wines_grouped_by_categories
 
 
-def count_age_of_company(year):
-    return datetime.datetime.now().year-year
-
-
 def proper_translation_of_year_into_russian_on_basis_of_company_age(year):
     proper_words_in_russian_dict = ['лет', 'год', 'года']
     exceptions = [11, 12, 13, 14]
@@ -53,7 +49,7 @@ def main():
     categories_of_wines = group_wines_by_categories(
         assortment
     )
-    age_of_company = count_age_of_company(YEAR_OF_INCORPORATION)
+    age_of_company = datetime.datetime.now().year-YEAR_OF_INCORPORATION
     proper_word_in_russian = \
         proper_translation_of_year_into_russian_on_basis_of_company_age(
             age_of_company
