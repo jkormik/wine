@@ -22,19 +22,17 @@ def group_wines_by_categories(wines):
 
 
 def get_proper_rus_year_noun(year):
-    proper_words_in_russian_dict = ['лет', 'год', 'года']
+    rus_year_nouns = ['лет', 'год', 'года']
     exceptions = [11, 12, 13, 14]
-    first_special_condition_numbers = [1]
-    second_special_condition_numbers = [2, 3, 4]
-    last_number_of_age_of_company = int(str(year)[-1])
-    if last_number_of_age_of_company in first_special_condition_numbers \
+    last_year_num = int(str(year)[-1])
+    if last_year_num == 1 \
             and year not in exceptions:
-        proper_word_in_russian = proper_words_in_russian_dict[1]
-    elif last_number_of_age_of_company in second_special_condition_numbers \
+        proper_word_in_russian = rus_year_nouns[1]
+    elif last_year_num in [2,3,4] \
             and year not in exceptions:
-        proper_word_in_russian = proper_words_in_russian_dict[2]
+        proper_word_in_russian = rus_year_nouns[2]
     else:
-        proper_word_in_russian = proper_words_in_russian_dict[0]
+        proper_word_in_russian = rus_year_nouns[0]
     return proper_word_in_russian
 
 
